@@ -12,7 +12,7 @@ Built by [dylsteck.eth](https://warpcast.com/dylsteck.eth)
 
 
 ### Short-term edits to make
-- [] [Add filters to view trending casts by users with certain POAPs or NFTs using Airstack API’s](https://warpcast.com/betashop.eth/0x50d872d2)
+- [x] [Add filters to view trending casts by users with certain POAPs or NFTs using Airstack API’s](https://warpcast.com/betashop.eth/0x50d872d2)
 - [] Add latest casts page
     - this will be quick, it's the same logic as trending but with a different route
 - [] Style homepage and cast view pages

@@ -1,17 +1,18 @@
 import { Image, StyleSheet, Text, View } from "react-native";
 import { Cast } from "./NeynarTrendingCasts";
+import { NeynarCastV1 } from "../app/modal";
 
 
-const CastComponent = ({ cast }: { cast: Cast}) => {
+const NeynarV1CastComponent = ({ cast }: { cast: NeynarCastV1}) => {
   return(
     <View style={styles.castContainer}>
       <View style={styles.castContentContainer}>
         <View style={styles.headerContainer}>
-          <Image source={{ uri: cast.author.pfp_url }} style={styles.profilePic} />
-          <Text style={styles.username}>{cast.author.display_name}</Text>
+          <Image source={{ uri: cast.author.pfp.url }} style={styles.profilePic} />
+          <Text style={styles.username}>{cast.author.displayName}</Text>
           <View style={styles.reactionsContainer}>
-            <Text style={styles.reactionText}>❤️ {cast.reactions.likes.length}</Text>
-            <Text style={styles.reactionText}>🔄 {cast.reactions.recasts.length}</Text>
+            <Text style={styles.reactionText}>❤️ {cast.reactions.count}</Text>
+            <Text style={styles.reactionText}>🔄 {cast.recasts.count}</Text>
             <Text style={styles.reactionText}>💬 {cast.replies.count}</Text>
           </View>
         </View>
@@ -94,4 +95,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default CastComponent;
+export default NeynarV1CastComponent;

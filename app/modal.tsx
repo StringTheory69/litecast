@@ -3,6 +3,74 @@ import { Link, useNavigation } from 'expo-router';
 import React, { useState, useEffect } from 'react';
 import { ScrollView, Text, View, StyleSheet, Image, TouchableOpacity, Button } from 'react-native';
 
+export type NeynarCastV1 = {
+  hash: string;
+  parentHash: string | null;
+  parentUrl: string | null;
+  threadHash: string;
+  parentAuthor: {
+    fid: number | null;
+  };
+  author: {
+    fid: number;
+    custodyAddress: string;
+    username: string;
+    displayName: string;
+    pfp: {
+      url: string;
+    };
+    profile: {
+      bio: {
+        text: string;
+        mentionedProfiles: any[];
+      };
+    };
+    followerCount: number;
+    followingCount: number;
+    verifications: string[];
+    activeStatus: 'active' | 'inactive';
+  };
+  text: string;
+  timestamp: string;
+  embeds: { url: string }[];
+  mentionedProfiles: {
+    fid: number;
+    custodyAddress: string;
+    username: string;
+    displayName: string;
+    pfp: {
+      url: string;
+    };
+    profile: {
+      bio: {
+        text: string;
+        mentionedProfiles: any[];
+      };
+    };
+    followerCount: number;
+    followingCount: number;
+    verifications: string[];
+    activeStatus: 'active' | 'inactive';
+  }[];
+  reactions: {
+    count: number;
+    fids: number[];
+    fnames: string[];
+  };
+  recasts: {
+    count: number;
+    fids: number[];
+  };
+  recasters: string[];
+  viewerContext: {
+    liked: boolean;
+    recasted: boolean;
+  };
+  replies: {
+    count: number;
+  };
+};
+
 const ModalScreen = () => {
   const [thread, setThread] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -20,7 +88,6 @@ const ModalScreen = () => {
     })
     .then(response => response.json())
     .then(data => {
-      console.log(data.result.casts);
       setThread(organizeThread(data.result.casts));
       setLoading(false);
     })
@@ -49,7 +116,6 @@ const ModalScreen = () => {
   };
 
   const renderThread = (casts, level = 0) => {
-    console.log(casts[0], Object.keys(casts[0]))
     return casts.map(cast => (
       <View key={cast.hash} style={{ marginLeft: 20 * level, marginTop: 10 }}>
         {/* <Text style={styles.author}>{cast.author.displayName}</Text>

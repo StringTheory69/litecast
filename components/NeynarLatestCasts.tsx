@@ -2,35 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, StyleSheet, Image } from 'react-native';
 import { Link } from 'expo-router';
 import { Pressable } from 'react-native';
-import CastComponent from './Cast';
-
-export interface Cast {
-  hash: string;
-  author: {
-    username: string;
-    pfp_url: string;
-    display_name: string;
-  };
-  text: string;
-  timestamp: string;
-  embeds?: { url: string }[];
-  reactions: {
-    likes: Array<{ fid: number, fname: string }>;
-    recasts: Array<{ fid: number, fname: string }>;
-  };
-  replies: { count: number };
-}
+import { NeynarCastV1 } from '../app/modal';
+import NeynarV1CastComponent from './NeynarV1Cast';
 
 interface FeedResponse {
-  casts: Cast[];
+  casts: NeynarCastV1[];
 }
 
-export default function NeynarTrendingCasts() {
+export default function NeynarLatestCasts() {
   const [feedResponse, setFeedResponse] = useState<FeedResponse | null>(null);
 
   useEffect(() => {
     async function getFeed() {
-      const url = 'https://api.neynar.com/v2/farcaster/feed?feed_type=filter&filter_type=global_trending&limit=25';
+      const url = 'https://api.neynar.com/v1/farcaster/recent-casts?viewerFid=3&limit=25';
       try {
         const response = await fetch(url, {
           method: 'GET',
@@ -45,7 +29,7 @@ export default function NeynarTrendingCasts() {
         }
 
         const result = await response.json();
-        setFeedResponse(result);
+        setFeedResponse(result.result);
       } catch (error) {
         console.error('Error fetching feed:', error);
       }
@@ -60,7 +44,7 @@ export default function NeynarTrendingCasts() {
   <Link key={index} href={`/modal?hash=${cast.hash}`} asChild>
     <Pressable>
       {({ pressed }) => (
-        <CastComponent cast={cast} />
+        <NeynarV1CastComponent cast={cast} />
       )}
     </Pressable>
   </Link>
