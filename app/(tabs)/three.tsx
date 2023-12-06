@@ -81,7 +81,7 @@ export default function TabThreeScreen() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': '136b7e425fba4d5d8c25e189fcecc6ae',
+        'Authorization': process.env.AIRSTACK_API_KEY ?? '',
       },
       body: JSON.stringify({ query: query }),
     });
